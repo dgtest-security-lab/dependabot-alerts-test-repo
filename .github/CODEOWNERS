@@ -1,0 +1,5 @@
+# CODEOWNERS test file
+
+***/*.rb @monalisa
+*.txt docs@
+/.github/workflows/ @dgtest-selecthub
