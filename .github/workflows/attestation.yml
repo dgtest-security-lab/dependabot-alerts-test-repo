@@ -1,0 +1,35 @@
+name: Generate Sigstore Attestation
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+  attestations: write
+  artifact-metadata: write
+
+jobs:
+  attest:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Generate artifact attestation
+        uses: actions/attest@v2
+        with:
+          subject-path: hello.txt
+          predicate-type: https://slsa.dev/provenance/v1
+          predicate: |
+            {
+              "buildDefinition": {
+                "buildType": "https://example.com/test-build"
+              },
+              "runDetails": {
+                "builder": {
+                  "id": "https://github.com/dgtest-security-lab/dependabot-alerts-test-repo"
+                }
+              }
+            }
